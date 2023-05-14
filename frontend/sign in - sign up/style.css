@@ -118,6 +118,7 @@ a{
 .login-form .group .label{
 	color:#aaa;
 	font-size:12px;
+	direction: rtl;
 }
 
 .login-form .group .button{
