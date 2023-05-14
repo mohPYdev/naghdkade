@@ -16,6 +16,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 LOCAL_APPS = [
     'naghdkade_backend.core.apps.CoreConfig',
     'naghdkade_backend.common.apps.CommonConfig',
+    'naghdkade_backend.social.apps.SocialConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -112,6 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'social.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
