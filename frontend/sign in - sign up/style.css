@@ -200,3 +200,7 @@ a{
 .foot-lnk{
 	text-align:center;
 }
+
+#emailSent{
+	display: none;
+}
