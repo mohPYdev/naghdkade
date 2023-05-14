@@ -57,3 +57,22 @@ class Rating(models.Model):
 
     def __str__(self):
         return f"{self.user.username} rates Post {self.post.id} with {self.value}"
+    
+
+class Goal(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, null=True, blank=True)
+    tv_series = models.ForeignKey(TVSeries, on_delete=models.CASCADE, null=True, blank=True)
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        if self.movie:
+            return f"Goal to watch movie: {self.movie.title}"
+        elif self.tv_series:
+            return f"Goal to watch TV series: {self.tv_series.title}"
+        else:
+            return "Invalid goal"
+
+    class Meta:
+        unique_together = ['user', 'movie']
+        unique_together = ['user', 'tv_series']
