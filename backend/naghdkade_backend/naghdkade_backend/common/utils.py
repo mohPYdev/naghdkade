@@ -3,6 +3,9 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.core.exceptions import ImproperlyConfigured
 
+from django.db.models import Model
+from rest_framework.utils import model_meta
+
 from rest_framework import serializers
 
 
@@ -57,3 +60,55 @@ def assert_settings(required_settings, error_message_prefix=""):
         raise ImproperlyConfigured(f"{error_message_prefix} Could not find: {stringified_not_present}")
 
     return values
+
+
+
+def inline_model_serializer(*, serializer_model: Model, serializer_name: str, model_fields: list | str,
+                            serializer_custom_fields: dict | None = None):
+    if serializer_custom_fields:
+        serializer_custom_fields['Meta'] = type('Meta', (object,), {"model": serializer_model, 'fields': model_fields})
+    else:
+        serializer_custom_fields = {'Meta': type('Meta', (object,), {"model": serializer_model, 'fields': model_fields})}
+
+    serializer_class = type(serializer_name, (serializers.ModelSerializer,), serializer_custom_fields)
+
+    return serializer_class
+
+
+def update_model_instance(*, instance: Model, data: dict) -> Model:
+    """Updates given model instance using given data"""
+    info = model_meta.get_field_info(instance)
+
+    many_to_many_fields = []
+    for attr, value in data.items():
+        if attr in info.relations and info.relations[attr].to_many:
+            many_to_many_fields.append((attr, value))
+        else:
+            setattr(instance, attr, value)
+
+    instance.save()
+
+    for attr, value in many_to_many_fields:
+        field = getattr(instance, attr)
+        field.set(value)
+
+    return instance
+
+
+def create_models_with_many_to_many_fields(*, model: Model, validated_data: dict):
+    """Saves many to many fields of given model instance from given data"""
+
+    info = model_meta.get_field_info(model)
+    many_to_many = {}
+    for field_name, relation_info in info.relations.items():
+        if relation_info.to_many and (field_name in validated_data):
+            many_to_many[field_name] = validated_data.pop(field_name)
+
+    instance = model.objects.create(**validated_data)
+
+    if many_to_many:
+        for field_name, value in many_to_many.items():
+            field = getattr(instance, field_name)
+            field.set(value)
+
+    return instance

@@ -8,6 +8,8 @@ from naghdkade_backend.cinema.models import Movie, TVSeries
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     bio = models.CharField(max_length=100, null=True, blank=True)
+    # image = models.ImageField()
+
 
     def __str__(self):
         return self.username
