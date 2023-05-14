@@ -13,6 +13,7 @@ class Movie(models.Model):
     release_date = models.DateField()
     duration = models.PositiveIntegerField()  # Duration in minutes
     genres = models.ManyToManyField(Genre)
+    link = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -23,6 +24,7 @@ class TVSeries(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(null=True, blank=True)
     genres = models.ManyToManyField(Genre)
+    link = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
