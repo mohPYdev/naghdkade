@@ -17,6 +17,7 @@ LOCAL_APPS = [
     'naghdkade_backend.core.apps.CoreConfig',
     'naghdkade_backend.common.apps.CommonConfig',
     'naghdkade_backend.social.apps.SocialConfig',
+    'naghdkade_backend.cinema.apps.CinemaConfig',
 ]
 
 THIRD_PARTY_APPS = [

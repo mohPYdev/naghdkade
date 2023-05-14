@@ -1,11 +1,13 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from naghdkade_backend.cinema.models import Movie, TVSeries
+
 
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    bio = models.CharField(max_length=100)
+    bio = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.username
@@ -13,6 +15,8 @@ class User(AbstractUser):
 
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, null=True, blank=True)
+    tv_series = models.ForeignKey(TVSeries, on_delete=models.CASCADE, null=True, blank=True)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
