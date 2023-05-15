@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 from naghdkade_backend.cinema.models import Movie, TVSeries
-
+from statistics import mean
 
 
 class User(AbstractUser):
@@ -24,6 +24,12 @@ class Post(models.Model):
 
     def __str__(self):
         return f"Post {self.id} by {self.user.username}"
+    
+    @property
+    def mean_rating(self) -> float:
+        ratings = Rating.objects.filter(post= self)
+        mean = mean([r.value for r in ratings])
+        return float(mean)
 
 
 class Follow(models.Model):

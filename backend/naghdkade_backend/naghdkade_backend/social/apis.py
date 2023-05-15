@@ -232,9 +232,10 @@ class PostDetailApi(ApiAuthMixin, APIView):
             serializer_name='post_detail_series_serializer'
         )()
 
+
         class Meta:
             model = Post
-            fields = ['user', 'movie', 'tv_series', 'content', 'created_at']
+            fields = ['user', 'movie', 'tv_series', 'content', 'created_at', 'mean_rating']
 
 
 
@@ -319,7 +320,7 @@ class followDetailApi(ApiAuthMixin, APIView):
     permission_classes = [IsOwnerOrReadOnly, ]
 
     
-    @extend_schema(tags=['follow'])
+    @extend_schema(tags=['Follow'])
     def delete(self, request, follow_id):
         query = delete_follow(follow_id=follow_id)
         if not query:
