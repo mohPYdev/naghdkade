@@ -30,3 +30,26 @@ def get_post_user_list(*, user_id):
     user = User.objects.get(id= user_id)
 
     return Post.objects.filter(user= user)
+
+
+def get_follower_list(*, user):
+    followers = user.followers.all()
+    follower_users = User.objects.filter(followings__in=followers)
+    return follower_users
+
+def get_following_list(*, user):
+    followings = user.followings.all()
+    following_users = User.objects.filter(followers__in=followings)
+    return following_users
+
+def get_follow_list(*, user: User):
+    
+    followers = get_follower_list(user)
+    followings = get_following_list(user)
+
+    query = {
+        'followers': followers,
+        'followings': followings
+    }
+
+    return query

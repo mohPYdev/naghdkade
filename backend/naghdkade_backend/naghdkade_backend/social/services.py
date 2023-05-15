@@ -2,7 +2,7 @@ from django.db import transaction
 from django.core.exceptions import ObjectDoesNotExist
 
 
-from naghdkade_backend.social.models import User, Post
+from naghdkade_backend.social.models import User, Post, Follow
 from naghdkade_backend.cinema.models import Movie, TVSeries
 from naghdkade_backend.common.utils import update_model_instance
 
@@ -26,3 +26,10 @@ def delete_post(*, post_id: int) -> None:
         return Post.objects.get(id=post_id).delete()
     except ObjectDoesNotExist:
         return None
+    
+
+@transaction.atomic()
+def create_follow(*, data: dict(),  user: User ) -> Follow:
+    
+    follow = Follow.objects.create(**data, follower=user)
+    return follow

@@ -13,8 +13,8 @@ from naghdkade_backend.social.models import User, Follow, Post, Like, Rating, Go
 from naghdkade_backend.cinema.models import Movie, TVSeries
 
 from naghdkade_backend.social.selectors import get_post_list, get_post_detail, get_post_me_list,\
-                                                get_post_follower_list, get_post_user_list
-from naghdkade_backend.social.services import create_post, delete_post, update_post
+                                                get_post_follower_list, get_post_user_list, get_follow_list
+from naghdkade_backend.social.services import create_post, delete_post, update_post, create_follow
 
 from naghdkade_backend.social.permissions import IsOwnerOrReadOnly
 
@@ -218,3 +218,43 @@ class PostDetailApi(ApiAuthMixin, APIView):
         updated_post = update_post(instance=post, data=serializer.validated_data)
         return Response(self.OutPutPostDetailSerializer(updated_post, context={"request": request}).data)
 
+
+
+class FollowApi(ApiAuthMixin, APIView):
+    class OutPutFollowSerializer(serializers.Serializer):
+        
+        followers = inline_model_serializer(
+            serializer_model=User,
+            serializer_name='follower_serializer',
+            model_fields=['id', 'username',  ]
+        )(many=True)
+        
+        followings = inline_model_serializer(
+            serializer_model=User,
+            serializer_name='following_serializer',
+            model_fields=['id', 'username',  ]
+        )(many=True)
+
+
+    class InputPostSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Follow
+            fields = ['follower', 'following']
+
+
+    @extend_schema(responses=OutPutFollowSerializer, tags=['Follow'])
+    def get(self, request):
+        query = get_follow_list(user= request.user)
+        return Response(self.OutPutFollowSerializer(query, many=True, context={"request": request}).data)
+
+    @extend_schema(request=InputPostSerializer,
+                   responses=OutPutFollowSerializer,
+                   tags=['Follow'])
+    def post(self, request):
+        serializer = self.InputPostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        query = create_follow(data=serializer.validated_data, user=request.user)
+        if not query:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_201_CREATED)
