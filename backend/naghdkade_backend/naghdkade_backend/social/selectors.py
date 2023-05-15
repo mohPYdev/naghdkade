@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import QuerySet
 
 from naghdkade_backend.cinema.models import Movie, TVSeries
-from naghdkade_backend.social.models import User, Post
+from naghdkade_backend.social.models import User, Post, Comment, Follow, Rating
 
 
 
@@ -53,3 +53,12 @@ def get_follow_list(*, user: User):
     }
 
     return query
+
+
+def get_comment_list(*, user: User, post_id: int):
+
+    return Comment.objects.filter(post__id= post_id)
+
+def get_rating_list(*, user: User, post_id: int):
+
+    return Rating.objects.filter(post__id= post_id)
