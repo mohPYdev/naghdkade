@@ -14,6 +14,7 @@ class Movie(models.Model):
     duration = models.PositiveIntegerField()  # Duration in minutes
     genres = models.ManyToManyField(Genre)
     link = models.URLField(blank=True, null=True)
+    # poster = models.ImageField()
 
     def __str__(self):
         return self.title
