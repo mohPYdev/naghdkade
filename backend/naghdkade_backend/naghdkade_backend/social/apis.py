@@ -14,7 +14,9 @@ from naghdkade_backend.cinema.models import Movie, TVSeries
 
 from naghdkade_backend.social.selectors import get_post_list, get_post_detail, get_post_me_list,\
                                                 get_post_follower_list, get_post_user_list, get_follow_list,\
-                                                get_comment_list, get_rating_list
+                                                get_comment_list, get_rating_list, get_post_movie_list,\
+                                                get_post_series_list
+
 from naghdkade_backend.social.services import create_post, delete_post, update_post, create_follow, create_comment,\
                                                 delete_follow, create_rating
 
@@ -180,7 +182,7 @@ class PostMovieApi(ApiAuthMixin, APIView):
 
     @extend_schema(responses=OutPutPostMovieSerializer, tags=['Post'])
     def get(self, request, movie_id):
-        query = get_post_user_list(movie_id = movie_id)
+        query = get_post_movie_list(movie_id = movie_id)
         return Response(self.OutPutPostMovieSerializer(query, many=True, context={"request": request}).data)
 
 
@@ -207,7 +209,7 @@ class PostSeriesApi(ApiAuthMixin, APIView):
 
     @extend_schema(responses=OutPutPostSeriesSerializer, tags=['Post'])
     def get(self, request, series_id):
-        query = get_post_user_list(series_id = series_id)
+        query = get_post_series_list(series_id = series_id)
         return Response(self.OutPutPostSeriesSerializer(query, many=True, context={"request": request}).data)
 
 
