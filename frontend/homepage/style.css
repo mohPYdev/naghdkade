@@ -28,102 +28,16 @@ h3 {
     font-size: 1.3rem;
 }
 
-.tm-site-logo {
-    width: 40px;
-    height: 40px;
-    border: 7px solid white;
-    transform: rotate(45deg);
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.tm-site-title {
-    display: inline-block;
-    vertical-align: middle;
-    margin-bottom: 0;
-}
-
-.tm-site-header {
-    padding-top: 45px;
-    padding-bottom: 45px;
-    margin-bottom: 0;
-}
-
-#tm-video-loader {
-    border: 5px solid #f3f3f3;
-    -webkit-animation: spin 1s linear infinite;
-    animation: spin 1s linear infinite;
-    border-top: 5px solid #555;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-    margin: auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.tm-video-container {
-    position: relative;
-    max-width: 1280px;
-    max-height: 640px;
-    overflow-y: hidden;
-}
-
-.tm-video-text {
-    display: inline-block;
-}
-
-.tm-welcome-video {
-    max-width: 100%;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -100;
-    background-color: black;
-    background-size: cover;
-    transition: 1s opacity;
-}
-
-.tm-video-text-overlay {
-    position: absolute;
-    left: 60%;
-    bottom: 30px;
-}
-.tm-video-text-overlay h1 {
-	font-size: 3.4rem;
-}
 .tm-welcome-text {
     margin-top: 65px;
     margin-bottom: 65px;
     font-size: 2.2rem;
     color: #404040;
+    text-decoration: underline;
 }
 
 .tm-font-400 {
     font-weight: 400;
-}
-
-.tm-text-light-gray {
-    color: #CDCDCD;
-}
-
-.tm-text-gray {
-    color: #CCCCCC;
-}
-
-.tm-text-white {
-    color: #FFFFFF;
-}
-
-a.tm-text-white:hover,
-a.tm-text-white:focus {
-    color: #FFFFFF;
 }
 
 .tm-text-green {
