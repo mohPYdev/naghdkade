@@ -144,6 +144,7 @@ a.tm-text-white:focus {
 
 .tm-bg-dark {
     background-color: #262626;
+    width: 300%;
 }
 
 .tm-bg-dark-light {
@@ -292,6 +293,9 @@ p {
     .tm-video-text-overlay {
         left: 60%;
     }
+    .tm-bg-dark {
+        width: 150%;
+    }
 }
 
 @media (max-width: 991px) {
@@ -314,6 +318,9 @@ p {
 	}
     .tm-timeline-item {
         margin-left: 25px;
+    }
+    .tm-bg-dark {
+        width: auto;
     }
 }
 
