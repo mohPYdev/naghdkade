@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             getElementsByTagName('li')[0].getElementsByTagName('a')[0].getElementsByTagName('span')[0];
     navBarSelector.style.color = '#ffffff';
 
-    showReviewHandler();
 });
 
 function onloadHandler(){
