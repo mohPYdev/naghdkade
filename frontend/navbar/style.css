@@ -8,7 +8,6 @@ body{
 	background-color: #c8c8c8;
 	display: flex;
 	font-family: 'Markazi Text', serif;
-	overflow-y: hidden;
 }
 
 .homepageNavbar{
