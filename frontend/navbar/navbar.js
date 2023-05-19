@@ -5,6 +5,26 @@ function setNavLinksHeight(){
     }
 }
 
-function redirectNewestReviews(){
+function toHomepage(){
+    top.location = '../homepage/homepage.html';
+}
+
+function toProfile(){
+    top.location = '../profile/profile.html';
+}
+
+function toNewestReviews(){
     top.location = '../newestReviews/newestReviews.html';
+}
+
+function toMovies(){
+    top.location = '../movies/movies.html';
+}
+
+function toSeries(){
+    top.location = '../series/series.html';
+}
+
+function toSignin(){
+    top.location = '../sign in - sign up/signin-signup.html';
 }
