@@ -4,3 +4,7 @@ function setNavLinksHeight(){
         NL[i].style.height = NL[i].clientHeight / 2 + "px";
     }
 }
+
+function redirectNewestReviews(){
+    top.location = '../newestReviews/newestReviews.html';
+}
