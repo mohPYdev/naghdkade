@@ -1,3 +1,7 @@
+function navbarOnloadHandler(){
+    setNavLinksHeight();
+}
+
 function setNavLinksHeight(){
     let NL = document.getElementsByClassName("navLink");
     for(let i=0; i<NL.length ; i++){
