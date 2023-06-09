@@ -16,3 +16,11 @@ function showFollowArea(){
 
     }*/
 }
+
+var followChoose = true;
+function followingClicked(){
+    followChoose = true;
+}
+function followerClicked(){
+    followChoose = false;
+}
