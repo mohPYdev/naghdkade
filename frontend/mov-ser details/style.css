@@ -1,0 +1,159 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f1f3ff;
+    color: #ffffff;
+    font-family: 'Markazi Text', serif;
+    text-align: right;
+}
+
+.container{
+    margin-top: 0px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 300;
+}
+
+h3 {
+    font-size: 1.3rem;
+}
+
+.tm-welcome-text {
+    margin-top: 65px;
+    margin-bottom: 65px;
+    font-size: 2.2rem;
+    color: #404040;
+    text-decoration: underline;
+}
+
+.tm-font-400 {
+    font-weight: 400;
+}
+
+.tm-text-green {
+    color: #99CC66;
+}
+
+.tm-bg-dark {
+    background-color: #262626;
+    width: 300%;
+}
+.tm-timeline-item {
+    margin-left: 70px;
+}
+
+.tm-timeline-item-inner {
+    display: flex;
+    align-items: center;
+}
+
+.tm-img-timeline {
+    width: 160px;
+    height: 160px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.tm-timeline-connector {
+    width: 55px;
+    height: 3px;
+    background-color: #404040;
+}
+
+.tm-timeline-connector-vertical {
+    height: 60px;
+    width: 3px;
+    background-color: #404040;
+    margin-left: 260px;
+}
+
+.tm-timeline-description {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 20px;
+    padding: 35px 40px;
+    max-width: 712px;
+}
+
+.tm-section-mb {
+    margin-bottom: 85px;
+}
+.form-control {
+    border-radius: 0;
+    border-color: #666666;
+	color: #CCC;
+    background: transparent;
+    padding: 12px 15px;
+}
+
+iframe {
+    max-width: 100%;
+}
+
+p {
+    line-height: 1.9;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1310px;
+    }
+    .tm-container-2 {
+        max-width: 1170px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .tm-bg-dark {
+        width: 150%;
+    }
+}
+
+@media (max-width: 991px) {
+    .tm-timeline-item {
+        margin-left: 25px;
+    }
+    .tm-bg-dark {
+        width: auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .tm-timeline-item {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 584px) {
+    .tm-timeline-item-inner {
+        flex-direction: column;
+    }
+    .tm-timeline-connector {
+        width: 3px;
+        height: 55px;
+    }
+    .tm-timeline-connector-vertical {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 575px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+iframe html body .homepageNavbar ul li:nth-child(1) a span{
+    color: #ffffff;
+}
