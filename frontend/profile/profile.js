@@ -1,5 +1,7 @@
 function personReviewsOnloadHandler(){
     showPersonReviewsHandler();
+}
+function profileOnloadHandler(){
     showFollowArea();
 }
 
@@ -15,12 +17,4 @@ function showFollowArea(){
     document.getElementsByClassName('following-follower')[0].style.display = "none";
 
     }*/
-}
-
-var followChoose = true;
-function followingClicked(){
-    followChoose = true;
-}
-function followerClicked(){
-    followChoose = false;
 }
