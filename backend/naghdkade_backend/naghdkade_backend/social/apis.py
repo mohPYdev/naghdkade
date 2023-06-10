@@ -31,7 +31,7 @@ class PostApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username',  ]
+            model_fields=['username', 'image'  ]
         )()
         movie = inline_model_serializer(
             serializer_model=Movie,
@@ -76,7 +76,7 @@ class PostMeApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username',  ]
+            model_fields=['username', 'image' ]
         )()
         movie = inline_model_serializer(
             serializer_model=Movie,
@@ -106,7 +106,7 @@ class PostFollowerApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username',  ]
+            model_fields=['username', 'image' ]
         )()
         movie = inline_model_serializer(
             serializer_model=Movie,
@@ -136,7 +136,7 @@ class PostUserApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username',  ]
+            model_fields=['username', 'image' ]
         )()
         movie = inline_model_serializer(
             serializer_model=Movie,
@@ -166,7 +166,7 @@ class PostMovieApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username',  ]
+            model_fields=['username', 'image' ]
         )()
 
         movie = inline_model_serializer(
@@ -192,7 +192,7 @@ class PostSeriesApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username',  ]
+            model_fields=['username', 'image' ]
         )()
 
         tv_series = inline_model_serializer(
@@ -220,7 +220,7 @@ class PostDetailApi(ApiAuthMixin, APIView):
 
         user = inline_model_serializer(
             serializer_model=User,
-            model_fields=['username', ],
+            model_fields=['username', 'image'],
             serializer_name='post_detail_user_serializer'
         )()
         movie = inline_model_serializer(
@@ -284,13 +284,13 @@ class FollowApi(ApiAuthMixin, APIView):
         followers = inline_model_serializer(
             serializer_model=User,
             serializer_name='follower_serializer',
-            model_fields=['id', 'username',  ]
+            model_fields=['id', 'username', 'image' ]
         )(many=True)
         
         followings = inline_model_serializer(
             serializer_model=User,
             serializer_name='following_serializer',
-            model_fields=['id', 'username',  ]
+            model_fields=['id', 'username', 'image' ]
         )(many=True)
 
 
@@ -337,7 +337,7 @@ class CommentApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_comment_serializer',
-            model_fields=['id', 'username',  ]
+            model_fields=['id', 'username', 'image' ]
         )()
 
 
@@ -375,7 +375,7 @@ class RatingApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_rating_serializer',
-            model_fields=['id', 'username',  ]
+            model_fields=['id', 'username', 'image' ]
         )()
 
 

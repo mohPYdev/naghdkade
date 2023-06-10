@@ -2,6 +2,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import serializers
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
 
 
 from naghdkade_backend.api.mixins import ApiAuthMixin
@@ -14,11 +17,12 @@ from drf_spectacular.utils import extend_schema
 
 
 class MovieApi(ApiAuthMixin, APIView):
+
     class OutPutMovieSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = Movie
-            fields = ('id', 'title', 'release_date',)
+            fields = ('id', 'title', 'release_date', 'poster')
 
 
     @extend_schema(responses=OutPutMovieSerializer, tags=['Movie'])
@@ -35,7 +39,7 @@ class MovieDetailApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = Movie
-            fields = ['title', 'release_date', 'duration', 'genres', 'link']
+            fields = ['title', 'release_date', 'duration', 'genres', 'link', 'poster']
 
 
     @extend_schema(responses=OutPutMovieDetailSerializer, tags=['Movie'])
@@ -51,7 +55,7 @@ class TVSeriesApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = TVSeries
-            fields = ('id', 'title', 'start_date',)
+            fields = ('id', 'title', 'start_date', 'poster')
 
 
     @extend_schema(responses=OutPutSeriesSerializer, tags=['Series'])
@@ -68,7 +72,7 @@ class TVSeriesDetailApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = TVSeries
-            fields = ['title', 'start_date', 'end_date', 'genres', 'link']
+            fields = ['title', 'start_date', 'end_date', 'genres', 'link', 'poster']
 
 
     @extend_schema(responses=OutPutSeriesDetailSerializer, tags=['Series'])

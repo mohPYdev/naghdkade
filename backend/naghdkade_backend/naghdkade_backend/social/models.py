@@ -8,7 +8,7 @@ from statistics import mean
 class User(AbstractUser):
     email = models.EmailField(unique=True)
     bio = models.CharField(max_length=100, null=True, blank=True)
-    # image = models.ImageField()
+    image = models.ImageField(upload_to='users/', null=True)
 
 
     def __str__(self):
