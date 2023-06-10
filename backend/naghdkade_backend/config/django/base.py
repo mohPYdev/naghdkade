@@ -16,6 +16,8 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 LOCAL_APPS = [
     'naghdkade_backend.core.apps.CoreConfig',
     'naghdkade_backend.common.apps.CommonConfig',
+    'naghdkade_backend.social.apps.SocialConfig',
+    'naghdkade_backend.cinema.apps.CinemaConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -26,6 +28,8 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'drf_spectacular',
     'django_extensions',
+    'rest_framework.authtoken',
+    'djoser',
 ]
 
 INSTALLED_APPS = [
@@ -113,6 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'social.User'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -141,7 +148,9 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': []
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
 }
 
 

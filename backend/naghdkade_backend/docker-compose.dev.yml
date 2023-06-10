@@ -14,15 +14,6 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data/
 
-  pgadmin:
-    container_name: pgadmin4_container
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: 'pg_pass'
-    ports:
-      - "5050:80"
 
   rabbitmq:
     image: "rabbitmq:alpine"
@@ -41,6 +32,17 @@ services:
     volumes:
       - redis-data:/data
 
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 'pg_pass'
+    ports:
+      - "5050:80"
+      
 
 volumes:
     postgres-data:
