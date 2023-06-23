@@ -3,6 +3,7 @@ function personReviewsOnloadHandler(){
 }
 function profileOnloadHandler(){
     showFollowArea();
+    showUserFollow();
 }
 
 //show reviews
@@ -19,4 +20,20 @@ function showFollowArea(){
     document.getElementsByClassName('following-follower')[0].style.display = "none";
 
     }*/
+}
+
+function showUserFollow(){
+    /*if(){
+    document.getElementsByClassName('userFollow')[0].style.display = "none";
+
+    }*/
+}
+
+function toggleFollowButton(){
+    // if(){
+    //     document.getElementById('userFollowBtn').value = "دنبال نکردن";
+    // }
+    // else{
+    //     document.getElementById('userFollowBtn').value = "دنبال کردن";
+    // }
 }
