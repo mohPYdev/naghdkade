@@ -30,5 +30,20 @@ function toSeries(){
 }
 
 function toSignin(){
-    top.location = '../sign in - sign up/signin-signup.html';
+
+    // Post signout information
+    fetch('http://localhost:8000/auth/token/logout', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('logout')
+            
+    })
+
+
+    top.location = '../signin-signup.html';
 }

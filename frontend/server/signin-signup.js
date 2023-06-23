@@ -19,6 +19,7 @@ function signinClicked(){
         .then(data => {
         // Store the token in a browser cookie
         document.cookie = `token=${data.auth_token}`;
+        
         console.log(data.auth_token)
     })
 }
