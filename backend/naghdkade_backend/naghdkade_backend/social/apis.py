@@ -31,7 +31,7 @@ class PostApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image'  ]
+            model_fields=['username', 'image']
         )()
         movie = inline_model_serializer(
             serializer_model=Movie,
@@ -298,7 +298,7 @@ class FollowApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = Follow
-            fields = ['follower', 'following']
+            fields = ['following',]
 
 
     @extend_schema(responses=OutPutFollowSerializer, tags=['Follow'])
@@ -323,8 +323,8 @@ class followDetailApi(ApiAuthMixin, APIView):
 
     
     @extend_schema(tags=['Follow'])
-    def delete(self, request, follow_id):
-        query = delete_follow(follow_id=follow_id)
+    def delete(self, request, user_id):
+        query = delete_follow(user_id=user_id, user= request.user)
         if not query:
             return Response('object does not exist', status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)

@@ -36,9 +36,10 @@ def create_follow(*, data: dict(),  user: User ) -> Follow:
 
 
 @transaction.atomic
-def delete_follow(*, follow_id: int) -> None:
+def delete_follow(*, user_id: int, user: User) -> None:
     try:
-        return Follow.objects.get(id=follow_id).delete()
+        following = User.objects.get(id=user_id)
+        return Follow.objects.get(follower= user, following=following).delete()
     except ObjectDoesNotExist:
         return None
     

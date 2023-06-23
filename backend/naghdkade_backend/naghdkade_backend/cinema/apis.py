@@ -36,6 +36,8 @@ class MovieDetailApi(ApiAuthMixin, APIView):
 
     class OutPutMovieDetailSerializer(serializers.ModelSerializer):
 
+        genres = serializers.StringRelatedField(many=True)
+
 
         class Meta:
             model = Movie

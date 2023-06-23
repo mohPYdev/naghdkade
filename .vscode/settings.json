@@ -3,5 +3,8 @@
         "activityBar.background": "#5A004A",
         "titleBar.activeBackground": "#7E0067",
         "titleBar.activeForeground": "#FFF8FE"
-    }
+    },
+    "cSpell.words": [
+        "unfollow"
+    ]
 }

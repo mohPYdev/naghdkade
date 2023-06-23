@@ -9,7 +9,7 @@ from naghdkade_backend.social.models import User, Post, Comment, Follow, Rating
 
 
 def get_post_list() -> QuerySet:
-    return Post.objects.all()
+    return Post.objects.all().order_by('created_at')[:20]
 
 def get_post_detail(*, post_id: int) -> Post  | None:
     try:

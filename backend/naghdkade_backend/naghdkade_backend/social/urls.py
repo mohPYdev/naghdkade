@@ -14,7 +14,7 @@ urlpatterns = [
     path('posts/series/<int:series_id>/', PostSeriesApi.as_view(), name="post-series_list"),
     
     path('follow/', FollowApi.as_view(), name="follow_list"),
-    path('unfollow/<int:post_id>/', followDetailApi.as_view(), name="follow_detail"),
+    path('unfollow/<int:user_id>/', followDetailApi.as_view(), name="follow_detail"),
     
     path('comments/<int:post_id>/', CommentApi.as_view(), name="comment_list"),
     
