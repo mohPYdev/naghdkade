@@ -20,7 +20,11 @@ function showReviewsHandler(){
 
     //show reviews
 
-    const seriesID= 1;
+      // get the id of the series
+      const urlParams = new URLSearchParams(window.location.search);
+      const seriesID = urlParams.get('id');
+
+
         // Get the token from the cookie
         const token = getCookieValue('token');
         fetch(`http://localhost:8000/api/cinema/series/${seriesID}/`, {

@@ -46,7 +46,7 @@ class PostApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = Post
-            fields = ('id', 'user', 'movie', 'tv_series')
+            fields = ('id', 'user', 'movie', 'tv_series',)
 
     class InputPostSerializer(serializers.ModelSerializer):
 

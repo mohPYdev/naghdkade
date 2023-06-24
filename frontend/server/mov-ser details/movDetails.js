@@ -18,9 +18,13 @@ function showReviewsHandler(){
 
     document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(movie);
 
+
+    // get the id of the movie
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieID = urlParams.get('id');
+
     //show reviews
 
-    const movieID= 1;
         // Get the token from the cookie
         const token = getCookieValue('token');
         fetch(`http://localhost:8000/api/cinema/movies/${movieID}/`, {

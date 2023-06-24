@@ -36,6 +36,15 @@ function showMovieHandler(){
             // For example:
             // const movieElement = document.createElement('div');
             // movieElement.textContent = movie.title;
+
+              // Add click event listener to each movie element   TODO: event listener like this
+            // movieElement.addEventListener('click', () => {
+            //   // Construct the URL for the movie detail page
+            //   const movieDetailURL = `../mov-ser details/movDetail.html?id=${movie.id}`;
+            //   // Redirect the user to the movie detail page
+            //   window.location.href = movieDetailURL;
+            // });
+
             // document.body.appendChild(movieElement);
           });
         })
