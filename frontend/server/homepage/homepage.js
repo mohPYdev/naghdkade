@@ -22,11 +22,10 @@ function homepageOnloadHandler(){
 //show reviews
 function showReviewHandler(){
     let review = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
+    let trashReview = document.getElementsByClassName('tm-timeline-item')[0];
+    trashReview.parentNode.removeChild(trashReview)
 
-    document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(review);
-
-    //show followin reviews
-
+    //document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(review);
 
       // Get the token from the cookie
     console.log(token)
@@ -39,6 +38,7 @@ function showReviewHandler(){
       .then(posts => {
         posts.forEach(post => {
           console.log(post);
+          alert(post);
           // You can also append the movie details to an HTML element
           // For example:
           // const movieElement = document.createElement('div');
