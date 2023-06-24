@@ -89,3 +89,7 @@ function submitComment(){
             // reload the page
     })
 }
+
+function submitRate(){
+  
+}

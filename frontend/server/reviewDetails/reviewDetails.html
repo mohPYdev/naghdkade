@@ -39,15 +39,24 @@
                                         <h3 class="tm-text-green tm-font-400" style="text-align: left;">Leon the professional (1994)</h3>
                                         <p>ژانر: جنایی، هیجانی، اکشن</p>
                                         <p>تاریخ نقد: 1402/01/10</p>
-                                        <p style="font-weight: 500; color: #f1f3ff;">من ملیکا خندان هستم و این نقد من برای فیلم مورد نظر می باشد</p>
+                                        <p style="font-weight: 500; color: #f1f3ff; border: 0.1px dashed gray; border-radius: 5px;">من ملیکا خندان هستم و این نقد من برای فیلم مورد نظر می باشد</p>
                                         <p>امتیاز این نقد: 4.3 / 5</p>
+                                        <div>
+                                            <input type="radio" name="rateReview" value="one"/> 1
+                                            <input type="radio" name="rateReview" value="two"/> 2
+                                            <input type="radio" name="rateReview" value="three" checked="checked"/> 3
+                                            <input type="radio" name="rateReview" value="four"/> 4
+                                            <input type="radio" name="rateReview" value="five"/> 5
+                                            <br/>
+                                            <input type="submit" value="ثبت امتیاز به این نقد" style="width: 200px;" onclick="submitRate()"/>
+                                        </div>
                                         <a href="../profile/otherProfile.html"><p class="tm-text-green float-right mb-0">melika :پست شده توسط</p></a>
                                         <br/><br/>
                                         
                                         <div>
                                             <textarea id="comment" rows="4" placeholder="نظر خود را راجع به این نقد بیان کنید" style="width: 100%;text-align: right;"></textarea>
                                         </div>
-                                        <input type="submit" value="ثبت" style="width: 200px;" onclick="submitComment()"/>
+                                        <input type="submit" value="ثبت نظر" style="width: 200px;" onclick="submitComment()"/>
                                     </div>
                                     
                                 </div>
