@@ -68,20 +68,6 @@ function showPersonReviewsHandler(){
 
 }
 
-function showFollowArea(){
-    /*if(){
-    document.getElementsByClassName('following-follower')[0].style.display = "none";
-
-    }*/
-}
-
-function showUserFollow(){
-    /*if(){
-    document.getElementsByClassName('userFollow')[0].style.display = "none";
-
-    }*/
-}
-
 function toggleFollowButton(){
     // if(){
     //     document.getElementById('userFollowBtn').value = "دنبال نکردن";
