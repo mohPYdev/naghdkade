@@ -35,11 +35,7 @@ function showPersonReviewsHandler(){
         .then(response => response.json())
         .then(user => {
             console.log(user);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
-            // document.body.appendChild(movieElement);
+            
             })
         .catch(error => {
             console.error('Error:', error);
