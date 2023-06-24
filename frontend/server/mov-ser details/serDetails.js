@@ -66,3 +66,7 @@ function showReviewsHandler(){
         });
 
 }
+
+function submitReview(){
+  
+}
