@@ -7,7 +7,7 @@
   <script type="text/javascript" src='signin-signup.js'></script>
 
 </head>
-<body>
+<body onload="signinupOnloadHandler()">
 <!-- partial:index.partial.html -->
 <div class="login-wrap">
 	<div class="login-html">
@@ -24,16 +24,12 @@
 					<input id="pass" type="password" class="input" data-type="password">
 				</div>
 				<div class="group">
-					<input id="check" type="checkbox" class="check" checked>
-					<label for="check"><span class="icon"></span> می خواهم در سیستم بمانم</label>
-				</div>
-				<div class="group">
 					<input type="submit" class="button" value="ورود" onclick="signinClicked()">
 				</div>
 				<div class="hr"></div>
-				<div class="foot-lnk">
+				<!-- <div class="foot-lnk">
 					<a href="reset password.html">رمز عبورتان را فراموش کرده اید؟</a>
-				</div>
+				</div> -->
 			</div>
 			<div class="sign-up-htm">
 				<div class="group">

@@ -8,8 +8,13 @@ function getCookieValue(name) {
   }
   return null;
 }
+
+let token;
 function movserDetailsOnloadHandler(){
-    //set details
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showReviewsHandler();
 }
 
@@ -26,7 +31,6 @@ function showReviewsHandler(){
     //show reviews
 
         // Get the token from the cookie
-        const token = getCookieValue('token');
         fetch(`http://localhost:8000/api/cinema/movies/${movieID}/`, {
         headers: {
             'Authorization': `Token ${token}`
@@ -69,4 +73,8 @@ function showReviewsHandler(){
           console.error('Error:', error);
         });
 
+}
+
+function submitReview(){
+  
 }

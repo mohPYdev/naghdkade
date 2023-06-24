@@ -8,10 +8,20 @@ function getCookieValue(name) {
   }
   return null;
 }
+
+let token;
 function personReviewsOnloadHandler(){
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showPersonReviewsHandler();
 }
 function profileOnloadHandler(){
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showFollowArea();
     showUserFollow();
 }
@@ -66,20 +76,6 @@ function showPersonReviewsHandler(){
         });
 
 
-}
-
-function showFollowArea(){
-    /*if(){
-    document.getElementsByClassName('following-follower')[0].style.display = "none";
-
-    }*/
-}
-
-function showUserFollow(){
-    /*if(){
-    document.getElementsByClassName('userFollow')[0].style.display = "none";
-
-    }*/
 }
 
 function toggleFollowButton(){

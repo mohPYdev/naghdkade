@@ -9,7 +9,12 @@ function getCookieValue(name) {
   return null;
 }
 
+let token;
 function moviesOnloadHandler(){
+  token = getCookieValue('token');
+  if(token == null || token == undefined || token == "undefined"){
+    top.location = '../signin-signup.html';
+  }
   showMovieHandler();
 }
 
@@ -22,7 +27,6 @@ function showMovieHandler(){
 
     //show movies
       // Get the token from the cookie
-      const token = getCookieValue('token');
       fetch('http://localhost:8000/api/cinema/movies/', {
         headers: {
           'Authorization': `Token ${token}`

@@ -8,8 +8,13 @@ function getCookieValue(name) {
     }
     return null;
   }
+
+let token;
 function reviewDetailsOnloadHandler(){
-    //fetch review details
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showCommentsHandler();
 }
 
@@ -88,4 +93,8 @@ function submitComment(){
 
             // reload the page
     })
+}
+
+function submitRate(){
+  
 }
