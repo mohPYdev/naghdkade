@@ -8,7 +8,13 @@ function getCookieValue(name) {
     }
     return null;
   }
+
+let token;
 function seriesOnloadHandler(){
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showSerieHandler();
 }
 

@@ -8,7 +8,13 @@ function getCookieValue(name) {
   }
   return null;
 }
+
+let token;
 function newestReviewsOnloadHandler(){
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showReviewHandler();
 }
 
@@ -20,7 +26,6 @@ function showReviewHandler(){
     
     //show newest reviews
          // Get the token from the cookie
-         const token = getCookieValue('token');
          fetch('http://localhost:8000/api/social/posts/', {
            headers: {
              'Authorization': `Token ${token}`

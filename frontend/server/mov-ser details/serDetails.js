@@ -8,8 +8,13 @@ function getCookieValue(name) {
   }
   return null;
 }
+
+let token;
 function movserDetailsOnloadHandler(){
-    //set details
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showReviewsHandler();
 }
 
@@ -22,7 +27,6 @@ function showReviewsHandler(){
 
     const seriesID= 1;
         // Get the token from the cookie
-        const token = getCookieValue('token');
         fetch(`http://localhost:8000/api/cinema/series/${seriesID}/`, {
         headers: {
             'Authorization': `Token ${token}`

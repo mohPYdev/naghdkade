@@ -9,9 +9,12 @@ function getCookieValue(name) {
     return null;
 }
 
-
+let token;
 function followingOnloadHandler(){
-    const token = getCookieValue('token')
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     fetch(`http://localhost:8000/api/social/follow/`, {
         headers: {
             'Authorization': `Token ${token}`
@@ -28,7 +31,10 @@ function followingOnloadHandler(){
 }
 
 function followerOnloadHandler(){
-    const token = getCookieValue('token')
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }q
     fetch(`http://localhost:8000/api/social/follow/`, {
         headers: {
             'Authorization': `Token ${token}`

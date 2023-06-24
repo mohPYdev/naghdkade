@@ -92,7 +92,7 @@ async function convertTheToken(user, pass) {
         
         console.log(data.auth_token)
 
-        if (data.auth_token != undefined){
+        if (data.auth_token != undefined && data.auth_token != "undefined" && data.auth_token != null){
             top.location = 'homepage/homepage.html';
         }
         else{

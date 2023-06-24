@@ -9,7 +9,12 @@ function getCookieValue(name) {
   return null;
 }
 
+let token;
 function homepageOnloadHandler(){
+    token = getCookieValue('token');
+    if(token == null || token == undefined || token == "undefined"){
+      top.location = '../signin-signup.html';
+    }
     showReviewHandler();
 }
 
@@ -24,7 +29,6 @@ function showReviewHandler(){
 
 
       // Get the token from the cookie
-    const token = getCookieValue('token');
     console.log(token)
     fetch('http://localhost:8000/api/social/posts/following/', {
       headers: {
