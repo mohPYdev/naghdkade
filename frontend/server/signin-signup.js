@@ -49,7 +49,7 @@ function signupClicked(){
             password: parentDiv.getElementsByClassName('group')[1].getElementsByTagName('input')[0].value
         };
         
-        // Post login information
+        // Post signup information
         fetch('http://localhost:8000/auth/users/', {
             method: 'POST',
             headers: {
@@ -59,8 +59,50 @@ function signupClicked(){
         })
             .then(response => response.json())
             .then(data => {
+            
             console.log(data.details)
         })
+
+        convertTheToken(parentDiv.getElementsByClassName('group')[0].getElementsByTagName('input')[0].value, parentDiv.getElementsByClassName('group')[1].getElementsByTagName('input')[0].value)
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function convertTheToken(user, pass) {
+    await sleep(2000);
+
+    const loginInfo = {
+        username: user,
+        password: pass
+    };
+    // Post login information
+    fetch('http://localhost:8000/auth/token/login', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginInfo)
+    })
+        .then(response => response.json())
+        .then(data => {
+        // Store the token in a browser cookie
+        document.cookie = `token=${data.auth_token}`;
+        
+        console.log(data.auth_token)
+
+        if (data.auth_token != undefined){
+            top.location = 'homepage/homepage.html';
+        }
+        else{
+            alert("رمزعبور باید شامل حداقل 10 کاراکتر و ترکیبی از عدد و حروف باشد. همچنین از وارد کردن نام کاربری و ایمیل تکراری خودداری نمائید");
+        }
+    })
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function emailSenderHandler(){
