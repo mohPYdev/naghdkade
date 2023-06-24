@@ -52,7 +52,7 @@ class PostApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = Post
-            exclude = ['id', 'user', 'created_at', 'movie', 'tv_series']
+            exclude = ['id', 'user', 'created_at']
 
 
     @extend_schema(responses=OutPutPostSerializer, tags=['Post'])
@@ -245,7 +245,7 @@ class PostDetailApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = Post
-            exclude = ['id', 'user', 'created_at']
+            exclude = ['id', 'user', 'created_at', 'tv_series', 'movie']
 
     @extend_schema(responses=OutPutPostDetailSerializer, tags=['Post'])
     def get(self, request, post_id):
@@ -294,7 +294,7 @@ class FollowApi(ApiAuthMixin, APIView):
         )(many=True)
 
 
-    class InputPostSerializer(serializers.ModelSerializer):
+    class InputFollowSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = Follow
@@ -306,11 +306,11 @@ class FollowApi(ApiAuthMixin, APIView):
         query = get_follow_list(user= request.user)
         return Response(self.OutPutFollowSerializer(query, many=True, context={"request": request}).data)
 
-    @extend_schema(request=InputPostSerializer,
+    @extend_schema(request=InputFollowSerializer,
                    responses=OutPutFollowSerializer,
                    tags=['Follow'])
     def post(self, request):
-        serializer = self.InputPostSerializer(data=request.data)
+        serializer = self.InputFollowSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         query = create_follow(data=serializer.validated_data, user=request.user)
         if not query:

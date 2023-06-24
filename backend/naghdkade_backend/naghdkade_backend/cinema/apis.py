@@ -6,10 +6,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
 
-
+from naghdkade_backend.common.utils import inline_model_serializer
 from naghdkade_backend.api.mixins import ApiAuthMixin
 
-from naghdkade_backend.cinema.models import Movie, TVSeries
+from naghdkade_backend.cinema.models import Movie, TVSeries, Genre
 
 from naghdkade_backend.cinema.selectors import get_movie_list, get_series_list, get_movie_detail, get_series_detail
 
@@ -36,12 +36,16 @@ class MovieDetailApi(ApiAuthMixin, APIView):
 
     class OutPutMovieDetailSerializer(serializers.ModelSerializer):
 
-        genres = serializers.StringRelatedField(many=True)
+        genres = inline_model_serializer(
+            serializer_model=Genre,
+            serializer_name='genre_movie_serializer',
+            model_fields=['name',]
+        )(many=True)
 
 
         class Meta:
             model = Movie
-            fields = ['title', 'release_date', 'duration', 'genres', 'link', 'poster']
+            fields = ['title', 'release_date', 'genres', 'duration', 'link', 'poster']
 
 
     @extend_schema(responses=OutPutMovieDetailSerializer, tags=['Movie'])
@@ -71,6 +75,11 @@ class TVSeriesDetailApi(ApiAuthMixin, APIView):
 
     class OutPutSeriesDetailSerializer(serializers.ModelSerializer):
 
+        genres = inline_model_serializer(
+            serializer_model=Genre,
+            serializer_name='genre_movie_serializer',
+            model_fields=['name',]
+        )(many=True)
 
         class Meta:
             model = TVSeries
