@@ -1,3 +1,5 @@
+import { getCookieValue } from "../token";
+
 function seriesOnloadHandler(){
     showSerieHandler();
 }
@@ -9,4 +11,26 @@ function showSerieHandler(){
     document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(serie);
     
     //show series
+
+        // Get the token from the cookie
+        const token = getCookieValue('token');
+        fetch('http://localhost:8000/api/cinema/series/', {
+        headers: {
+            'Authorization': `Token ${token}`
+        }
+        })
+        .then(response => response.json())
+        .then(series => {
+            series.forEach(s => {
+            console.log(s);
+            // You can also append the movie details to an HTML element
+            // For example:
+            // const movieElement = document.createElement('div');
+            // movieElement.textContent = movie.title;
+            // document.body.appendChild(movieElement);
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
