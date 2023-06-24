@@ -29,7 +29,7 @@ function toHomepage(){
 }
 
 function toProfile(){
-    top.location = '../profile/profile.html';
+    top.location = '../profile/selfProfile.html';
 }
 
 function toNewestReviews(){

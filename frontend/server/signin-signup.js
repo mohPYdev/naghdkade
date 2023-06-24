@@ -22,6 +22,8 @@ function signinClicked(){
         
         console.log(data.auth_token)
     })
+
+    // if (data.auth_token)
 }
 
 function signupClicked(){
