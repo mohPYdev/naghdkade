@@ -29,21 +29,43 @@ function toSeries(){
     top.location = '../series/series.html';
 }
 
+// Function to delete a cookie by its name
+function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+  }
+  
+
+// Function to get the value of a cookie by its name
+function getCookieValue(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + '=')) {
+        return cookie.substring(name.length + 1);
+      }
+    }
+    return null;
+  }
+
+
 function toSignin(){
 
+
+    const token = getCookieValue('token');
     // Post signout information
     fetch('http://localhost:8000/auth/token/logout', {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
         },
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('logout')
-            
-    })
+        .then(res => {
+            deleteCookie('token')
+            console.log(res)
+        })
 
 
     top.location = '../signin-signup.html';
 }
+

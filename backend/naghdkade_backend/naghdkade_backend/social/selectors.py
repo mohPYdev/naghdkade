@@ -21,7 +21,7 @@ def get_post_me_list(*, user : User):
     return Post.objects.filter(user= user)
 
 def get_post_follower_list(*, user: User):
-    followings = user.followings.all()
+    followings = user.following.all()
     following_users = User.objects.filter(followers__in=followings)
 
     return Post.objects.filter(user__in= following_users)
