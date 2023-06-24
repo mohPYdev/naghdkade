@@ -19,13 +19,11 @@ function reviewDetailsOnloadHandler(){
 }
 
 function showCommentsHandler(){
-    let movie = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
-
-    document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(movie);
 
     // show review detail
 
-    const postID= 1;
+    const urlParams = new URLSearchParams(window.location.search);
+    const postID = urlParams.get('id');
     // Get the token from the cookie
     const token = getCookieValue('token');
     fetch(`http://localhost:8000/api/social/posts/${postID}/`, {
@@ -36,19 +34,33 @@ function showCommentsHandler(){
     .then(response => response.json())
     .then(post => {
         console.log(post);
-        // You can also append the movie details to an HTML element
-        // For example:
-        // const movieElement = document.createElement('div');
-        // movieElement.textContent = movie.title;
-        // document.body.appendChild(movieElement);
+        let movieDetail = document.getElementsByClassName('tm-timeline-description')[0];
+        let postTitle;
+        if (post.movie != null){
+          postTitle = post.movie.title + "(" + post.movie.release_date + ")";
+          //insert genres
+        }
+        else{
+          postTitle = post.tv_series.title + "(" + post.tv_series.start_date + ")";
+          //insert genres
+        }
+        
+        movieDetail.getElementsByTagName('h3')[0].textContent = postTitle;
+        //genres
+        movieDetail.getElementsByTagName('p')[0].textContent = "ژانر:";
+        movieDetail.getElementsByTagName('p')[1].textContent = post.created_at + " : تاریخ نقد";
+        movieDetail.getElementsByTagName('p')[2].textContent = post.content;
+        movieDetail.getElementsByTagName('p')[3].textContent = post.mean_rating + " : امتیاز این نقد";
+        movieDetail.getElementsByTagName('a')[0].getElementsByTagName('p')[0].textContent = post.user.username + " : پست شده توسط" ;
+        movieDetail.getElementsByTagName('a')[0].href = `../profile/otherProfile.html?username=${post.user.username}`;
         })
     .catch(error => {
         console.error('Error:', error);
     });
 
-
-
-    // show comments
+    // let movie = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
+    document.getElementsByClassName('tm-timeline-item')[1].style.display = 'none'
+    // document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(movie);
 
     fetch(`http://localhost:8000/api/social/comments/${postID}/`, {
         headers: {
@@ -59,11 +71,16 @@ function showCommentsHandler(){
     .then(comments => {
       comments.forEach(comment => {
         console.log(comment);
-        // You can also append the movie details to an HTML element
-        // For example:
-        // const movieElement = document.createElement('div');
-        // movieElement.textContent = movie.title;
-        // document.body.appendChild(movieElement);
+        let mov = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
+        mov.style.display = 'block';
+
+        debugger;
+        mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = comment.user.image;
+        mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].getElementsByTagName('h3')[0].textContent = comment.user.username;
+        mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../profile/otherProfile.html?username=${comment.user.username}`;
+        mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = comment.content;
+
+        document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(mov);
       });
     })
     .catch(error => {
