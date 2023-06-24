@@ -120,6 +120,9 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'social.User'
 
 
+
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -166,6 +169,15 @@ CACHES = {
 }
 # Cache time to live is 15 minutes.
 CACHE_TTL = 60 * 15
+
+
+DJOSER = {
+    'SERIALIZERS': {
+        'user': 'naghdkade_backend.social.serializers.CustomUserSerializer',
+        'current_user': 'naghdkade_backend.social.serializers.CustomUserSerializer',
+        
+    }
+}
 
 
 APP_DOMAIN = env("APP_DOMAIN", default="http://localhost:8000")

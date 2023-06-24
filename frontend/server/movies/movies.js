@@ -1,11 +1,21 @@
-import {getCookieValue} from "../token"
+function getCookieValue(name) {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith(name + '=')) {
+      return cookie.substring(name.length + 1);
+    }
+  }
+  return null;
+}
 
 function moviesOnloadHandler(){
-    showMovieHandler();
+  showMovieHandler();
 }
 
 //show reviews
 function showMovieHandler(){
+    
     let movie = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
 
     document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(movie);
