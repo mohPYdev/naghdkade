@@ -28,8 +28,10 @@ class Post(models.Model):
     @property
     def mean_rating(self) -> float:
         ratings = Rating.objects.filter(post= self)
-        mean = mean([r.value for r in ratings])
-        return float(mean)
+        if ratings:
+            mean_value = mean(data=[r.value for r in ratings])
+            return float(mean_value)
+        return 0
 
 
 class Follow(models.Model):
