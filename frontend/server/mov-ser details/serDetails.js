@@ -34,8 +34,11 @@ function showSerieDetails(){
         document.getElementsByClassName('rounded-circle')[0].src = serie.poster;
         document.getElementsByClassName('tm-font-400')[0].textContent = serie.title + " (" + serie.start_date + ")"
         //insert genres
-        debugger;
-        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+        let genres = "";
+        for (let i=0 ; i<serie.genres.length ; i++){
+          genres += serie.genres[i].name + " "
+        }
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر : " + genres;
         document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[1].textContent = serie.summary + " : خلاصه داستان";
         document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = serie.link;
         })
@@ -69,7 +72,11 @@ function showReviewsHandler(){
             review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = post.user.image;
             review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('h3').textContent = post.movie.title + " (" + post.start_date + ")";
             //insert genres
-            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+            let genres = "";
+            for (let i=0 ; i<post.tv_series.genres.length ; i++){
+              genres += post.tv_series.genres[i].name + " "
+            }
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر : " + genres;
             review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../reviewDetails/reviewDetails.html?id=${post.id}`;
             review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[1].href = `../profile/otherProfile.html?id=${post.user.id}` ;
             review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[1].getElementsByTagName('p')[0].textContent = post.user.username + " : پست شده توسط";
