@@ -38,15 +38,23 @@ function showCommentsHandler(){
         if (post.movie != null){
           postTitle = post.movie.title + "(" + post.movie.release_date + ")";
           //insert genres
+          let genres = "";
+              for (let i=0 ; i<post.movie.genres.length ; i++){
+                genres += post.movie.genres[i].name + " "
+              }
+              movieDetail.getElementsByTagName('p')[0].textContent = "ژانر : " + genres;
         }
         else{
           postTitle = post.tv_series.title + "(" + post.tv_series.start_date + ")";
           //insert genres
+          let genres = "";
+              for (let i=0 ; i<post.tv_series.genres.length ; i++){
+                genres += post.tv_series.genres[i].name + " "
+              }
+              movieDetail.getElementsByTagName('p')[0].textContent = "ژانر : " + genres;
         }
         
         movieDetail.getElementsByTagName('h3')[0].textContent = postTitle;
-        //genres
-        movieDetail.getElementsByTagName('p')[0].textContent = "ژانر:";
         movieDetail.getElementsByTagName('p')[1].textContent = post.created_at + " : تاریخ نقد";
         movieDetail.getElementsByTagName('p')[2].textContent = post.content;
         movieDetail.getElementsByTagName('p')[3].textContent = post.mean_rating + " : امتیاز این نقد";
