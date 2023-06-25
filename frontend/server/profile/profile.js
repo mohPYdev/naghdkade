@@ -59,7 +59,23 @@ function showOtherProfile(){
 }
 
 function showSelfProfile(){
-
+  fetch(`http://localhost:8000/auth/users/me/`, {
+    headers: {
+        'Authorization': `Token ${token}`
+    }
+    })
+    .then(response => response.json())
+    .then(user => {
+        console.log(user);
+        document.getElementsByClassName('profile-image')[0].src = user.image;
+        document.getElementsByClassName('font-weight-bold')[0].textContent = user.username;
+        document.getElementById('userBio').textContent = user.bio;
+        document.getElementsByClassName('following-follower')[0].getElementsByTagName('div')[0].getElementsByTagName('a').href = `following.html?id=${user.id}`
+        document.getElementsByClassName('following-follower')[0].getElementsByTagName('div')[1].getElementsByTagName('a').href = `follower.html?id=${user.id}`
+        })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 //show reviews
@@ -103,80 +119,46 @@ function showOtherReviewsHandler(){
           console.error('Error:', error);
       });
 
-
-
-  //show reviews
-
-  fetch(`http://localhost:8000/api/social/posts/me/`, {
-      headers: {
-        'Authorization': `Token ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(posts => {
-        posts.forEach(post => {
-          console.log(post);
-          // You can also append the movie details to an HTML element
-          // For example:
-          // const movieElement = document.createElement('div');
-          // movieElement.textContent = movie.title;
-          // document.body.appendChild(movieElement);
-        });
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-
-
 }
 
 //show reviews
 function showSelfReviewsHandler(){
-    let movie = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
 
-    document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(movie);
+  document.getElementsByClassName('tm-timeline-item')[0].style.display = 'none'
 
+  // show profile
 
-    // show profile
-
-    fetch(`http://localhost:8000/auth/users/me/`, {
-        headers: {
-            'Authorization': `Token ${token}`
-        }
-        })
-        .then(response => response.json())
-        .then(user => {
-            console.log(user);
-            
-            })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-
-
-    //show reviews
-
-    fetch(`http://localhost:8000/api/social/posts/me/`, {
-        headers: {
+  fetch(`http://localhost:8000/api/social/posts/me/`, {
+      headers: {
           'Authorization': `Token ${token}`
-        }
+      }
       })
-        .then(response => response.json())
-        .then(posts => {
+      .then(response => response.json())
+      .then(posts => {
           posts.forEach(post => {
+            let review = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
+            review.style.display = 'block';
+  
             console.log(post);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
-            // document.body.appendChild(movieElement);
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = post.user.image;
+            if (post.movie != null){
+                review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByClassName('tm-font-400')[0].textContent = post.movie.title;
+                //genres
+                review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+            }
+            else{
+              review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByClassName('tm-font-400')[0].textContent = post.tv_series.title;
+              //genres
+              review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+            }
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../reviewDetails/reviewDetails.html?id=${post.id}`;
+            
+            document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(review);
           });
-        })
-        .catch(error => {
+          })
+      .catch(error => {
           console.error('Error:', error);
-        });
-
+      });
 
 }
 
