@@ -21,38 +21,30 @@ function moviesOnloadHandler(){
 //show reviews
 function showMovieHandler(){
     
-    let movie = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
+  document.getElementsByClassName('tm-timeline-item')[0].style.display = 'none'
 
-    document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(movie);
+  //show movies
+  // Get the token from the cookie
+  fetch('http://localhost:8000/api/cinema/movies/', {
+    headers: {
+      'Authorization': `Token ${token}`
+    }
+  })
+    .then(response => response.json())
+    .then(movies => {
+      movies.forEach(movie => {
+        console.log(movie);
+        let movieArea = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
+        movieArea.style.display = 'block';
 
-    //show movies
-      // Get the token from the cookie
-      fetch('http://localhost:8000/api/cinema/movies/', {
-        headers: {
-          'Authorization': `Token ${token}`
-        }
-      })
-        .then(response => response.json())
-        .then(movies => {
-          movies.forEach(movie => {
-            console.log(movie);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
+        movieArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = movie.poster;
+        movieArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].getElementsByTagName('h3')[0].textContent = movie.title + " (" + movie.release_date + ")";
+        movieArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../mov-ser details/movDetails.html?id=${movie.id}`;
 
-              // Add click event listener to each movie element   TODO: event listener like this
-            // movieElement.addEventListener('click', () => {
-            //   // Construct the URL for the movie detail page
-            //   const movieDetailURL = `../mov-ser details/movDetail.html?id=${movie.id}`;
-            //   // Redirect the user to the movie detail page
-            //   window.location.href = movieDetailURL;
-            // });
-
-            // document.body.appendChild(movieElement);
-          });
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+        document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(movieArea);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
