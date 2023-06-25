@@ -118,7 +118,8 @@ function submitComment(){
     })
         .then(response => response.json())
         .then(data => {      
-            console.log(data)
+            console.log(data);
+            location.reload();
     })
 }
 
@@ -149,7 +150,8 @@ function submitRate(){
     })
         .then(response => response.json())
         .then(data => {      
-            console.log(data)
+            console.log(data);
+            location.reload();
     })
 
   } else {
