@@ -22,7 +22,7 @@ from naghdkade_backend.social.services import create_post, delete_post, update_p
 
 from naghdkade_backend.social.permissions import IsOwnerOrReadOnly
 
-
+from .serializers import GeneralMovieSerializer, GeneralSeriesSerializer
 from drf_spectacular.utils import extend_schema
 
 
@@ -31,18 +31,10 @@ class PostApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image']
+            model_fields=['username', 'image', 'id']
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
@@ -76,18 +68,10 @@ class PostMeApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image','id' ]
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
@@ -106,18 +90,10 @@ class PostFollowerApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
@@ -136,18 +112,10 @@ class PostUserApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
@@ -166,14 +134,10 @@ class PostMovieApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
 
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
+        movie = GeneralMovieSerializer()
 
         class Meta:
             model = Post
@@ -192,14 +156,10 @@ class PostSeriesApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
 
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        tv_series = GeneralSeriesSerializer()
 
 
         class Meta:
@@ -220,19 +180,11 @@ class PostDetailApi(ApiAuthMixin, APIView):
 
         user = inline_model_serializer(
             serializer_model=User,
-            model_fields=['username', 'image'],
+            model_fields=['username', 'image', 'id'],
             serializer_name='post_detail_user_serializer'
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            model_fields=['title', 'release_date', 'genres'],
-            serializer_name='post_detail_movie_serializer'
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            model_fields=['title', 'start_date', 'genres' ],
-            serializer_name='post_detail_series_serializer'
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
 
         class Meta:
