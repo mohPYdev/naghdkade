@@ -129,6 +129,15 @@ function showOtherProfile(){
   const urlParams = new URLSearchParams(window.location.search);
   const userID = urlParams.get('id');
 
+  if (isFollow(userID)){
+    document.getElementById('userFollowBtn').style.backgroundColor = 'rgb(214 35 35 / 92%)';
+    document.getElementById('userFollowBtn').value = "دنبال نکردن"
+  }
+  else{
+    document.getElementById('userFollowBtn').style.backgroundColor = 'rgba(0, 128, 0, 0.486)';
+    document.getElementById('userFollowBtn').value = "دنبال کردن"
+  }
+
   fetch(`http://localhost:8000/auth/users/${userID}/`, {
     headers: {
         'Authorization': `Token ${token}`
