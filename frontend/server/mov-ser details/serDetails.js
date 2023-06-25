@@ -57,7 +57,7 @@ function showReviewsHandler(){
 
         // fetching the reviews of this movie
 
-      fetch(`http://localhost:8000/api/social/posts/serie/${serieID}/`, {
+      fetch(`http://localhost:8000/api/social/posts/series/${serieID}/`, {
         headers: {
           'Authorization': `Token ${token}`
         }
@@ -94,11 +94,11 @@ function submitReview(){
 
     const content = document.getElementById('comment').value
     const urlParams = new URLSearchParams(window.location.search);
-    const movieID = urlParams.get('id');
+    const seriesID = urlParams.get('id');
 
     reviewInfo = {
       content: content,
-      movie: movieID,
+      tv_series: seriesID,
     }
 
     token = getCookieValue('token');
