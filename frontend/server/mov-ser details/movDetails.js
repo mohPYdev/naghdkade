@@ -15,41 +15,42 @@ function movserDetailsOnloadHandler(){
     if(token == null || token == undefined || token == "undefined"){
       top.location = '../signin-signup.html';
     }
+    showMovieDetails();
     showReviewsHandler();
 }
 
+function showMovieDetails(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const movieID = urlParams.get('id');
+
+  fetch(`http://localhost:8000/api/cinema/movies/${movieID}/`, {
+    headers: {
+        'Authorization': `Token ${token}`
+    }
+    })
+    .then(response => response.json())
+    .then(movie => {
+        console.log(movie);
+        document.getElementsByClassName('rounded-circle')[0].src = movie.poster;
+        document.getElementsByClassName('tm-font-400')[0].textContent = movie.title + " (" + movie.release_date + ")"
+        //insert genres
+        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('p')[0].textContent = "ژانر:";
+        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('p')[1].textContent = movie.duration + " : مدت زمان";
+        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('p')[2].textContent = movie.summary + " : خلاصه داستان";
+        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('a')[0].href = movie.link;
+        })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
 function showReviewsHandler(){
-    let movieReview = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
 
-    //document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(movie);
-
+    document.getElementsByClassName('tm-timeline-item')[1].style.display = 'none';
 
     // get the id of the movie
     const urlParams = new URLSearchParams(window.location.search);
     const movieID = urlParams.get('id');
-
-    //show reviews
-
-        // Get the token from the cookie
-        fetch(`http://localhost:8000/api/cinema/movies/${movieID}/`, {
-        headers: {
-            'Authorization': `Token ${token}`
-        }
-        })
-        .then(response => response.json())
-        .then(movie => {
-            console.log(movie);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
-            // document.body.appendChild(movieElement);
-            })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-
-
 
         // fetching the reviews of this movie
 
@@ -62,11 +63,17 @@ function showReviewsHandler(){
         .then(posts => {
           posts.forEach(post => {
             console.log(post);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
-            // document.body.appendChild(movieElement);
+            let review = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
+            review.style.display = 'block';
+
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = post.user.image;
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('h3').textContent = post.movie.title + " (" + post.release_date + ")";
+            //insert genres
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../reviewDetails/reviewDetails.html?id=${post.id}`;
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[1].href = `../profile/otherProfile.html?id=${post.user.id}` ;
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[1].getElementsByTagName('p')[0].textContent = post.user.username + " : پست شده توسط";
+            
           });
         })
         .catch(error => {
