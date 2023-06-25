@@ -26,17 +26,30 @@ function followingOnloadHandler(){
         })
         .then(response => response.json())
         .then(data => {
-            let followingArea = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
-            followingArea.style.display = 'block';
 
             let followings = data.followings;
+
             for(let i=0 ; i<followings.length ; i++){
-                followingArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = followings[i].image;
-                followingArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark tm-timeline-description')[0].getElementsByTagName('a')[0].getElementsByTagName('h3')[0].textContent = followings[i].username;
-                followingArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark tm-timeline-description')[0].getElementsByTagName('a')[0].href = `../profile/otherProfile.html?id=${followings[i].id}`;
+                let followingArea = document.createElement('div');
+                followingArea.classList.add('tm-timeline-item');
+                followingArea.innerHTML = `
+                            <div class="tm-timeline-item-inner">
+                                <img src="${followings[i].image}" alt="Image" class="rounded-circle tm-img-timeline">
+                                <div class="tm-timeline-connector">
+                                    <p class="mb-0">&nbsp;</p>
+                                </div>
+                                <div class="tm-timeline-description-wrap" style="text-align: left;">
+                                    <div class="tm-bg-dark tm-timeline-description">
+                                        <a href="../profile/otherProfile.html?id=${followings[i].id}"><h3 class="tm-text-green tm-font-400" style=" font-size: 2rem;">${followings[i].username}</h3></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tm-timeline-connector-vertical"></div>`;
+
+                document.getElementsByClassName('col-lg-12')[1].appendChild(followingArea);
                 
             }
-
         })
         .catch(error => {
             console.error('Error:', error);
@@ -58,14 +71,28 @@ function followerOnloadHandler(){
         })
         .then(response => response.json())
         .then(data => {
-            let followerArea = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
-            followerArea.style.display = 'block';
 
             let followers = data.followers;
-            for(let i=0 ; i<followings.length ; i++){
-                followingArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = followers[i].image;
-                followingArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark tm-timeline-description')[0].getElementsByTagName('a')[0].getElementsByTagName('h3')[0].textContent = followers[i].username;
-                followingArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark tm-timeline-description')[0].getElementsByTagName('a')[0].href = `../profile/otherProfile.html?id=${followers[i].id}`;
+
+            for(let i=0 ; i<followers.length ; i++){
+                let followingArea = document.createElement('div');
+                followingArea.classList.add('tm-timeline-item');
+                followingArea.innerHTML = `
+                            <div class="tm-timeline-item-inner">
+                                <img src="${followers[i].image}" alt="Image" class="rounded-circle tm-img-timeline">
+                                <div class="tm-timeline-connector">
+                                    <p class="mb-0">&nbsp;</p>
+                                </div>
+                                <div class="tm-timeline-description-wrap" style="text-align: left;">
+                                    <div class="tm-bg-dark tm-timeline-description">
+                                        <a href="../profile/otherProfile.html?id=${followers[i].id}"><h3 class="tm-text-green tm-font-400" style=" font-size: 2rem;">${followers[i].username}</h3></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tm-timeline-connector-vertical"></div>`;
+
+                document.getElementsByClassName('col-lg-12')[1].appendChild(followingArea);
                 
             }
 

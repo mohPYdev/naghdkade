@@ -9,40 +9,40 @@ function getCookieValue(name) {
   return null;
 }
 
-
-function isFollow(userID){
-  token = getCookieValue('token');
-  if(token == null || token == undefined || token == "undefined"){
+async function isFollow(userID){
+  const token = getCookieValue('token');
+  if(token == null || token == undefined || token == "undefined") {
     top.location = '../signin-signup.html';
   }
-  fetch(`http://localhost:8000/api/social/follow/`, {
-      headers: {
-          'Authorization': `Token ${token}`
-      }
-      })
-      .then(response => response.json())
-      .then(data => {
-          let isFollowing = false;
-          data.followings.forEach(user =>{
-            if (user.id == userID){
-              isFollowing = true;
-            }
-          })
 
-          if (isFollowing){
-            return true;
-          }
-          else{
-            return false;
-          }
-  
-          
-          })
-      .catch(error => {
-          console.error('Error:', error);
-      });
+  const response = await fetch(`http://localhost:8000/api/social/follow/`, {
+    headers: {
+      'Authorization': `Token ${token}`
+    }
+  });
+
+  const data = await response.json();
+  let isFollowing = false;
+  data.followings.forEach(user => {
+    if (user.id == userID){
+      isFollowing = true;
+    }
+  });
+
+  return isFollowing;
 }
 
+async function checkFollowStatus(userID) {
+  const isFollowing = await isFollow(userID);
+  if (isFollowing){
+    document.getElementById('userFollowBtn').style.backgroundColor = 'rgb(214 35 35 / 92%)';
+    document.getElementById('userFollowBtn').value = "دنبال نکردن"
+  }
+  else{
+    document.getElementById('userFollowBtn').style.backgroundColor = 'rgba(0, 128, 0, 0.486)';
+    document.getElementById('userFollowBtn').value = "دنبال کردن"
+  }
+}
 
 function toggleFollowButton(){
   if(!isFollow){
@@ -129,14 +129,7 @@ function showOtherProfile(){
   const urlParams = new URLSearchParams(window.location.search);
   const userID = urlParams.get('id');
 
-  if (isFollow(userID)){
-    document.getElementById('userFollowBtn').style.backgroundColor = 'rgb(214 35 35 / 92%)';
-    document.getElementById('userFollowBtn').value = "دنبال نکردن"
-  }
-  else{
-    document.getElementById('userFollowBtn').style.backgroundColor = 'rgba(0, 128, 0, 0.486)';
-    document.getElementById('userFollowBtn').value = "دنبال کردن"
-  }
+  checkFollowStatus(userID)
 
   fetch(`http://localhost:8000/auth/users/${userID}/`, {
     headers: {
