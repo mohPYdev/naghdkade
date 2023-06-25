@@ -20,31 +20,31 @@ function seriesOnloadHandler(){
 
 //show reviews
 function showSerieHandler(){
-    let serie = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
 
-    document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(serie);
-    
-    //show series
+  document.getElementsByClassName('tm-timeline-item')[0].style.display = 'none'
 
-        // Get the token from the cookie
-        const token = getCookieValue('token');
-        fetch('http://localhost:8000/api/cinema/series/', {
-        headers: {
-            'Authorization': `Token ${token}`
-        }
-        })
-        .then(response => response.json())
-        .then(series => {
-            series.forEach(s => {
-            console.log(s);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
-            // document.body.appendChild(movieElement);
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+  //show movies
+  // Get the token from the cookie
+  fetch('http://localhost:8000/api/cinema/series/', {
+    headers: {
+      'Authorization': `Token ${token}`
+    }
+  })
+    .then(response => response.json())
+    .then(series => {
+      series.forEach(serie => {
+        console.log(serie);
+        let serieArea = document.getElementsByClassName('tm-timeline-item')[0].cloneNode(true);
+        serieArea.style.display = 'block';
+
+        serieArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = serie.poster;
+        serieArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].getElementsByTagName('h3')[0].textContent = serie.title + " (" + serie.start_date + ")";
+        serieArea.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../mov-ser details/movDetails.html?id=${serie.id}`;
+
+        document.getElementsByClassName('tm-section-mb')[0].getElementsByClassName('col-lg-12')[0].appendChild(serieArea);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
 }
