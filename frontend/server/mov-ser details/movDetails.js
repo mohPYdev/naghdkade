@@ -30,14 +30,15 @@ function showMovieDetails(){
     })
     .then(response => response.json())
     .then(movie => {
+      
         console.log(movie);
         document.getElementsByClassName('rounded-circle')[0].src = movie.poster;
         document.getElementsByClassName('tm-font-400')[0].textContent = movie.title + " (" + movie.release_date + ")"
         //insert genres
-        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('p')[0].textContent = "ژانر:";
-        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('p')[1].textContent = movie.duration + " : مدت زمان";
-        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('p')[2].textContent = movie.summary + " : خلاصه داستان";
-        document.getElementsByClassName('tm-bg-dark').getElementsByTagName('a')[0].href = movie.link;
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[1].textContent = movie.duration + " : مدت زمان";
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[2].textContent = movie.summary + " : خلاصه داستان";
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = movie.link;
         })
     .catch(error => {
         console.error('Error:', error);

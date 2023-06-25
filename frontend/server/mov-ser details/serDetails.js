@@ -15,45 +15,46 @@ function movserDetailsOnloadHandler(){
     if(token == null || token == undefined || token == "undefined"){
       top.location = '../signin-signup.html';
     }
+    showSerieDetails();
     showReviewsHandler();
 }
 
-function showReviewsHandler(){
-    let movie = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
+function showSerieDetails(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const serieID = urlParams.get('id');
 
-    document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(movie);
-
-    //show reviews
-
-      // get the id of the series
-      const urlParams = new URLSearchParams(window.location.search);
-      const seriesID = urlParams.get('id');
-
-
-        // Get the token from the cookie
-        fetch(`http://localhost:8000/api/cinema/series/${seriesID}/`, {
-        headers: {
-            'Authorization': `Token ${token}`
-        }
+  fetch(`http://localhost:8000/api/cinema/series/${serieID}/`, {
+    headers: {
+        'Authorization': `Token ${token}`
+    }
+    })
+    .then(response => response.json())
+    .then(serie => {
+        console.log(serie);
+        document.getElementsByClassName('rounded-circle')[0].src = serie.poster;
+        document.getElementsByClassName('tm-font-400')[0].textContent = serie.title + " (" + serie.start_date + ")"
+        //insert genres
+        debugger;
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[1].textContent = serie.summary + " : خلاصه داستان";
+        document.getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = serie.link;
         })
-        .then(response => response.json())
-        .then(series => {
-            console.log(series);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
-            // document.body.appendChild(movieElement);
-            })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
 
+function showReviewsHandler(){
 
+    document.getElementsByClassName('tm-timeline-item')[1].style.display = 'none';
+
+    // get the id of the serie
+    const urlParams = new URLSearchParams(window.location.search);
+    const serieID = urlParams.get('id');
 
         // fetching the reviews of this movie
 
-      fetch(`http://localhost:8000/api/social/posts/series/${seriesID}/`, {
+      fetch(`http://localhost:8000/api/social/posts/serie/${serieID}/`, {
         headers: {
           'Authorization': `Token ${token}`
         }
@@ -62,11 +63,18 @@ function showReviewsHandler(){
         .then(posts => {
           posts.forEach(post => {
             console.log(post);
-            // You can also append the movie details to an HTML element
-            // For example:
-            // const movieElement = document.createElement('div');
-            // movieElement.textContent = movie.title;
-            // document.body.appendChild(movieElement);
+            let review = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
+            review.style.display = 'block';
+
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = post.user.image;
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('h3').textContent = post.movie.title + " (" + post.start_date + ")";
+            //insert genres
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = "ژانر:";
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../reviewDetails/reviewDetails.html?id=${post.id}`;
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[1].href = `../profile/otherProfile.html?id=${post.user.id}` ;
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[1].getElementsByTagName('p')[0].textContent = post.user.username + " : پست شده توسط";
+            
+            document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(review);
           });
         })
         .catch(error => {
@@ -76,27 +84,29 @@ function showReviewsHandler(){
 }
 
 function submitReview(){
-  const content = document.getElementById('comment').value
-  const urlParams = new URLSearchParams(window.location.search);
-  const seriesID = urlParams.get('id');
 
-  reviewInfo = {
-    content: content,
-    tv_series: seriesID,
-  }
+    const content = document.getElementById('comment').value
+    const urlParams = new URLSearchParams(window.location.search);
+    const movieID = urlParams.get('id');
 
-  token = getCookieValue('token');
+    reviewInfo = {
+      content: content,
+      movie: movieID,
+    }
 
-  fetch(`http://localhost:8000/api/social/posts/`, {
-      method: 'POST',
-      headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`
-      },
-      body: JSON.stringify(reviewInfo)
-  })
-      .then(response => response.json())
-      .then(data => {      
-          console.log(data)
-  })
+    token = getCookieValue('token');
+
+    fetch(`http://localhost:8000/api/social/posts/`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify(reviewInfo)
+    })
+        .then(response => response.json())
+        .then(data => {      
+            console.log(data)
+    })
+
 }
