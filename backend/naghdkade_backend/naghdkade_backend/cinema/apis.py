@@ -45,7 +45,7 @@ class MovieDetailApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = Movie
-            fields = ['title', 'release_date', 'genres', 'duration', 'link', 'poster']
+            fields = ['title', 'release_date', 'genres', 'duration', 'link', 'poster', 'summary']
 
 
     @extend_schema(responses=OutPutMovieDetailSerializer, tags=['Movie'])
@@ -83,7 +83,7 @@ class TVSeriesDetailApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = TVSeries
-            fields = ['title', 'start_date', 'end_date', 'genres', 'link', 'poster']
+            fields = ['title', 'start_date', 'end_date', 'genres', 'link', 'poster', 'summary']
 
 
     @extend_schema(responses=OutPutSeriesDetailSerializer, tags=['Series'])
