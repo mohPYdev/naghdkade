@@ -98,7 +98,7 @@ function showCommentsHandler(){
 function submitComment(){
     // content
     const commentInfo = {
-        content: document.getElementById('comment')
+        content: document.getElementById('comment').value
     };
 
     token = getCookieValue('token');
