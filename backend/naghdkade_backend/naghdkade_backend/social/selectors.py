@@ -26,10 +26,10 @@ def get_post_follower_list(*, user: User):
 
     return Post.objects.filter(user__in= following_users)
 
-def get_post_movie_list(*, user : User, movie_id: int):
+def get_post_movie_list(*,  movie_id: int):
     return Post.objects.filter(movie__id= movie_id)
 
-def get_post_series_list(*, user : User, series_id:int):
+def get_post_series_list(*, series_id:int):
     return Post.objects.filter(tv_series__id= series_id)
 
 def get_post_user_list(*, user_id):
