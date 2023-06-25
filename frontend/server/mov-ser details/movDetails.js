@@ -19,9 +19,9 @@ function movserDetailsOnloadHandler(){
 }
 
 function showReviewsHandler(){
-    let movie = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
+    let movieReview = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
 
-    document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(movie);
+    //document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(movie);
 
 
     // get the id of the movie
