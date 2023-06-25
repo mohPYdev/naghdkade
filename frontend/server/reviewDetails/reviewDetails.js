@@ -25,7 +25,6 @@ function showCommentsHandler(){
     const urlParams = new URLSearchParams(window.location.search);
     const postID = urlParams.get('id');
     // Get the token from the cookie
-    const token = getCookieValue('token');
     fetch(`http://localhost:8000/api/social/posts/${postID}/`, {
     headers: {
         'Authorization': `Token ${token}`
@@ -52,7 +51,7 @@ function showCommentsHandler(){
         movieDetail.getElementsByTagName('p')[2].textContent = post.content;
         movieDetail.getElementsByTagName('p')[3].textContent = post.mean_rating + " : امتیاز این نقد";
         movieDetail.getElementsByTagName('a')[0].getElementsByTagName('p')[0].textContent = post.user.username + " : پست شده توسط" ;
-        movieDetail.getElementsByTagName('a')[0].href = `../profile/otherProfile.html?username=${post.user.username}`;
+        movieDetail.getElementsByTagName('a')[0].href = `../profile/otherProfile.html?id=${post.user.id}`;
         })
     .catch(error => {
         console.error('Error:', error);
@@ -74,10 +73,9 @@ function showCommentsHandler(){
         let mov = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
         mov.style.display = 'block';
 
-        debugger;
         mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = comment.user.image;
         mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].getElementsByTagName('h3')[0].textContent = comment.user.username;
-        mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../profile/otherProfile.html?username=${comment.user.username}`;
+        mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('a')[0].href = `../profile/otherProfile.html?id=${comment.user.id}`;
         mov.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('p')[0].textContent = comment.content;
 
         document.getElementsByClassName('tm-section-mb')[1].getElementsByClassName('col-lg-12')[0].appendChild(mov);
