@@ -22,12 +22,20 @@ function isFollow(userID){
       })
       .then(response => response.json())
       .then(data => {
-          if (data.followings.includes(userID)){
+          let isFollowing = false;
+          data.followings.forEach(user =>{
+            if (user.id == userID){
+              isFollowing = true;
+            }
+          })
+
+          if (isFollowing){
             return true;
           }
           else{
             return false;
           }
+  
           
           })
       .catch(error => {
