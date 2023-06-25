@@ -15,21 +15,23 @@ async function isFollow(userID){
     top.location = '../signin-signup.html';
   }
 
-  const response = await fetch(`http://localhost:8000/api/social/follow/`, {
-    headers: {
-      'Authorization': `Token ${token}`
-    }
-  });
+    return fetch(`http://localhost:8000/api/social/follow/`, {
+      headers: {
+        'Authorization': `Token ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {      
+        let isFollowing = false;
+        data.followings.forEach(user => {
+          if (user.id == userID){
+            isFollowing = true;
+          }
+        });
+        return isFollowing;
+      })
 
-  const data = await response.json();
-  let isFollowing = false;
-  data.followings.forEach(user => {
-    if (user.id == userID){
-      isFollowing = true;
-    }
-  });
-
-  return isFollowing;
+    
 }
 
 async function checkFollowStatus(userID) {
@@ -44,12 +46,14 @@ async function checkFollowStatus(userID) {
   }
 }
 
-function toggleFollowButton(){
-  if(!isFollow){
-    const token = getCookieValue('token');
-    const urlParams = new URLSearchParams(window.location.search);
-    const userID = urlParams.get('id');
+async function toggleFollowButton(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const userID = urlParams.get('id');
+  const token = getCookieValue('token');
+  let bol = await isFollow(userID)
+  console.log(bol)
 
+  if(!bol){
     const followInfo = {
       following: userID
     }
@@ -69,12 +73,8 @@ function toggleFollowButton(){
             location.reload();
     })
   }
-  else{
-    const token = getCookieValue('token');
-    const urlParams = new URLSearchParams(window.location.search);
-    const userID = urlParams.get('id');
-    
-    fetch(`http://localhost:8000/api/social/follow/${userID}/`, {
+  else{    
+    fetch(`http://localhost:8000/api/social/unfollow/${userID}/`, {
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',
