@@ -92,9 +92,15 @@ function submitComment(){
     const commentInfo = {
         content: document.getElementById('comment')
     };
+
+    token = getCookieValue('token');
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const postID = urlParams.get('id');
     
     // Post login information
-    fetch('http://localhost:8000/auth/token/login', {
+    fetch(`http://localhost:8000/api/social/comments/${postID}/`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -105,11 +111,40 @@ function submitComment(){
         .then(response => response.json())
         .then(data => {      
             console.log(data)
-
-            // reload the page
     })
 }
 
 function submitRate(){
-  
+  const selectedOption = document.querySelector('input[name="rateReview"]:checked');
+  if (selectedOption) {
+    const selectedValue = parseInt(selectedOption.value, 10);
+    console.log("Selected option value (integer):", selectedValue);
+
+    const rateInfo = {
+      value: selectedValue
+    };
+
+    token = getCookieValue('token');
+
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const postID = urlParams.get('id');
+    
+    // Post login information
+    fetch(`http://localhost:8000/api/social/rating/${postID}/`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+        },
+        body: JSON.stringify(rateInfo)
+    })
+        .then(response => response.json())
+        .then(data => {      
+            console.log(data)
+    })
+
+  } else {
+    console.log("No option selected");
+  }
 }

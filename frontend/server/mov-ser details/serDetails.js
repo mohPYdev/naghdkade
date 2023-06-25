@@ -76,5 +76,27 @@ function showReviewsHandler(){
 }
 
 function submitReview(){
-  
+  const content = document.getElementById('comment').value
+  const urlParams = new URLSearchParams(window.location.search);
+  const seriesID = urlParams.get('id');
+
+  reviewInfo = {
+    content: content,
+    tv_series: seriesID,
+  }
+
+  token = getCookieValue('token');
+
+  fetch(`http://localhost:8000/api/social/posts/`, {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+      },
+      body: JSON.stringify(reviewInfo)
+  })
+      .then(response => response.json())
+      .then(data => {      
+          console.log(data)
+  })
 }
