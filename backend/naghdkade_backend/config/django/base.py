@@ -176,6 +176,12 @@ DJOSER = {
         'user': 'naghdkade_backend.social.serializers.CustomUserSerializer',
         'current_user': 'naghdkade_backend.social.serializers.CustomUserSerializer',
         
+    },
+
+    'PERMISSIONS': {
+        
+        'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly'],
+
     }
 }
 
