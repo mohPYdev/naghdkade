@@ -9,6 +9,32 @@ function getCookieValue(name) {
   return null;
 }
 
+
+function isFollow(userID){
+  token = getCookieValue('token');
+  if(token == null || token == undefined || token == "undefined"){
+    top.location = '../signin-signup.html';
+  }
+  fetch(`http://localhost:8000/api/social/follow/`, {
+      headers: {
+          'Authorization': `Token ${token}`
+      }
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.followings.includes(userID)){
+            return true;
+          }
+          else{
+            return false;
+          }
+          
+          })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+}
+
 function otherProfileOnloadHandler(){
   showOtherProfile();
   checkCookie();
@@ -163,10 +189,45 @@ function showSelfReviewsHandler(){
 }
 
 function toggleFollowButton(){
-    // if(){
-    //     document.getElementById('userFollowBtn').value = "دنبال نکردن";
-    // }
-    // else{
-    //     document.getElementById('userFollowBtn').value = "دنبال کردن";
-    // }
+    if(!isFollow){
+      const token = getCookieValue('token');
+      const urlParams = new URLSearchParams(window.location.search);
+      const userID = urlParams.get('id');
+
+      const followInfo = {
+        following: userID
+      }
+      
+      // Post login information
+      fetch(`http://localhost:8000/api/social/follow/`, {
+          method: 'POST',
+          headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
+          },
+          body: JSON.stringify(followInfo)
+      })
+          .then(response => response.json())
+          .then(data => {      
+              console.log(data)
+      })
+    }
+    else{
+      const token = getCookieValue('token');
+      const urlParams = new URLSearchParams(window.location.search);
+      const userID = urlParams.get('id');
+      
+      fetch(`http://localhost:8000/api/social/follow/${userID}/`, {
+          method: 'DELETE',
+          headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
+          },
+      })
+          .then(response => response.json())
+          .then(data => {      
+              console.log(data)
+      })
+
+    }
 }

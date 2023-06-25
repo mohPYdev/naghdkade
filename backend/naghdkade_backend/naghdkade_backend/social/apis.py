@@ -256,7 +256,7 @@ class FollowApi(ApiAuthMixin, APIView):
     @extend_schema(responses=OutPutFollowSerializer, tags=['Follow'])
     def get(self, request):
         query = get_follow_list(user= request.user)
-        return Response(self.OutPutFollowSerializer(query, many=True, context={"request": request}).data)
+        return Response(self.OutPutFollowSerializer(query, context={"request": request}).data)
 
     @extend_schema(request=InputFollowSerializer,
                    responses=OutPutFollowSerializer,

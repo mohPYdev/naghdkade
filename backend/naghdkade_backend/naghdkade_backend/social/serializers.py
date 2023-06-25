@@ -22,7 +22,7 @@ class GeneralMovieSerializer(serializers.ModelSerializer):
         serializer_model= Genre,
         serializer_name= 'generalGenreSerializer',
         model_fields=('name',)
-    )()
+    )(many=True)
 
     class Meta:
         model = Movie
@@ -35,7 +35,7 @@ class GeneralSeriesSerializer(serializers.ModelSerializer):
         serializer_model= Genre,
         serializer_name= 'generalGenreSerializer',
         model_fields=('name',)
-    )()
+    )(many=True)
 
     class Meta:
         model = TVSeries
