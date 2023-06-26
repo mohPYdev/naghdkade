@@ -124,6 +124,7 @@ function showSelfProfile(){
 function otherProfileOnloadHandler(){
   checkCookie();
   showOtherProfile();
+  otherReviewsOnloadHandler();
 }
 
 
@@ -200,7 +201,6 @@ function showSelfReviewsHandler(){
 //////////////////////////////////////////////////////////////////////////////////////////////////////other reviews
 
 function otherReviewsOnloadHandler(){
-  checkCookie();
   showOtherReviewsHandler();
 }
 
@@ -214,7 +214,7 @@ function showOtherReviewsHandler(){
   const userID = urlParams.get('id');
   // show profile
 
-  fetch(`http://localhost:8000/api/social/posts/user/${userID}/`, {
+  fetch(`http://localhost:8000/api/social/posts/${userID}/`, {
       headers: {
           'Authorization': `Token ${token}`
       }
