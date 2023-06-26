@@ -30,6 +30,11 @@ body {
 .profileImgaeDiv{
     width: max-content;
     height: max-content;
+    max-width: 300px;
 }
 
-
+@media screen and (max-width : 1200px) {
+    .profileImgaeDiv{
+        max-width: 250px;
+    }
+}
