@@ -214,7 +214,7 @@ function showOtherReviewsHandler(){
   const userID = urlParams.get('id');
   // show profile
 
-  fetch(`http://localhost:8000/api/social/posts/${userID}/`, {
+  fetch(`http://localhost:8000/api/social/posts/user/${userID}/`, {
       headers: {
           'Authorization': `Token ${token}`
       }
