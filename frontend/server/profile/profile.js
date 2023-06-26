@@ -51,7 +51,6 @@ async function toggleFollowButton(){
   const userID = urlParams.get('id');
   const token = getCookieValue('token');
   let bol = await isFollow(userID)
-  console.log(bol)
 
   if(!bol){
     const followInfo = {

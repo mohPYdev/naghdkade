@@ -64,13 +64,14 @@ function showReviewsHandler(){
       })
         .then(response => response.json())
         .then(posts => {
+          console.log(posts)
           posts.forEach(post => {
             console.log(post);
             let review = document.getElementsByClassName('tm-timeline-item')[1].cloneNode(true);
             review.style.display = 'block';
 
             review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('rounded-circle')[0].src = post.user.image;
-            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('h3').textContent = post.movie.title + " (" + post.start_date + ")";
+            review.getElementsByClassName('tm-timeline-item-inner')[0].getElementsByClassName('tm-timeline-description-wrap')[0].getElementsByClassName('tm-bg-dark')[0].getElementsByTagName('h3').textContent = post.tv_series.title + " (" + post.start_date + ")";
             //insert genres
             let genres = "";
             for (let i=0 ; i<post.tv_series.genres.length ; i++){
