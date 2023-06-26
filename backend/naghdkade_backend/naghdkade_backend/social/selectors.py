@@ -35,7 +35,8 @@ def get_post_series_list(*, series_id:int):
 def get_post_user_list(*, user_id):
     user = User.objects.get(id= user_id)
 
-    return Post.objects.filter(user= user)
+    posts = Post.objects.filter(user= user)
+    return posts
 
 
 def get_follower_list(*, user):

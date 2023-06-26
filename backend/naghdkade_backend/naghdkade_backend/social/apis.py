@@ -107,7 +107,7 @@ class PostFollowerApi(ApiAuthMixin, APIView):
 
 
 class PostUserApi(ApiAuthMixin, APIView):
-    class OutPutPostFollowerSerializer(serializers.ModelSerializer):
+    class OutPutPostUserSerializer(serializers.ModelSerializer):
         
         user = inline_model_serializer(
             serializer_model=User,
@@ -122,10 +122,10 @@ class PostUserApi(ApiAuthMixin, APIView):
             fields = ('id', 'user', 'movie', 'tv_series')
 
 
-    @extend_schema(responses=OutPutPostFollowerSerializer, tags=['Post'])
+    @extend_schema(responses=OutPutPostUserSerializer, tags=['Post'])
     def get(self, request, user_id):
         query = get_post_user_list(user_id = user_id)
-        return Response(self.OutPutPostFollowerSerializer(query, many=True, context={"request": request}).data)
+        return Response(self.OutPutPostUserSerializer(query, many=True, context={"request": request}).data)
 
 
 class PostMovieApi(ApiAuthMixin, APIView):
