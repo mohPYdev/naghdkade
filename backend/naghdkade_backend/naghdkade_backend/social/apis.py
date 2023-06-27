@@ -22,7 +22,7 @@ from naghdkade_backend.social.services import create_post, delete_post, update_p
 
 from naghdkade_backend.social.permissions import IsOwnerOrReadOnly
 
-
+from .serializers import GeneralMovieSerializer, GeneralSeriesSerializer
 from drf_spectacular.utils import extend_schema
 
 
@@ -31,28 +31,20 @@ class PostApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image'  ]
+            model_fields=['username', 'image', 'id']
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
-            fields = ('id', 'user', 'movie', 'tv_series')
+            fields = ('id', 'user', 'movie', 'tv_series',)
 
     class InputPostSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = Post
-            exclude = ['id', 'user', 'created_at', 'movie', 'tv_series']
+            exclude = ['id', 'user', 'created_at']
 
 
     @extend_schema(responses=OutPutPostSerializer, tags=['Post'])
@@ -76,18 +68,10 @@ class PostMeApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image','id' ]
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
@@ -106,18 +90,10 @@ class PostFollowerApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
@@ -131,33 +107,25 @@ class PostFollowerApi(ApiAuthMixin, APIView):
 
 
 class PostUserApi(ApiAuthMixin, APIView):
-    class OutPutPostFollowerSerializer(serializers.ModelSerializer):
+    class OutPutPostUserSerializer(serializers.ModelSerializer):
         
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
         class Meta:
             model = Post
             fields = ('id', 'user', 'movie', 'tv_series')
 
 
-    @extend_schema(responses=OutPutPostFollowerSerializer, tags=['Post'])
+    @extend_schema(responses=OutPutPostUserSerializer, tags=['Post'])
     def get(self, request, user_id):
         query = get_post_user_list(user_id = user_id)
-        return Response(self.OutPutPostFollowerSerializer(query, many=True, context={"request": request}).data)
+        return Response(self.OutPutPostUserSerializer(query, many=True, context={"request": request}).data)
 
 
 class PostMovieApi(ApiAuthMixin, APIView):
@@ -166,14 +134,10 @@ class PostMovieApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
 
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            serializer_name='post_movie_serializer',
-            model_fields=['title', 'genres', 'release_date']
-        )()
+        movie = GeneralMovieSerializer()
 
         class Meta:
             model = Post
@@ -192,14 +156,10 @@ class PostSeriesApi(ApiAuthMixin, APIView):
         user = inline_model_serializer(
             serializer_model=User,
             serializer_name='post_user_serializer',
-            model_fields=['username', 'image' ]
+            model_fields=['username', 'image', 'id' ]
         )()
 
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            serializer_name='post_series_serializer',
-            model_fields=['title', 'genres', 'start_date']
-        )()
+        tv_series = GeneralSeriesSerializer()
 
 
         class Meta:
@@ -220,19 +180,11 @@ class PostDetailApi(ApiAuthMixin, APIView):
 
         user = inline_model_serializer(
             serializer_model=User,
-            model_fields=['username', 'image'],
+            model_fields=['username', 'image', 'id'],
             serializer_name='post_detail_user_serializer'
         )()
-        movie = inline_model_serializer(
-            serializer_model=Movie,
-            model_fields=['title', 'release_date', 'genres'],
-            serializer_name='post_detail_movie_serializer'
-        )()
-        tv_series = inline_model_serializer(
-            serializer_model=TVSeries,
-            model_fields=['title', 'start_date', 'genres' ],
-            serializer_name='post_detail_series_serializer'
-        )()
+        movie = GeneralMovieSerializer()
+        tv_series = GeneralSeriesSerializer()
 
 
         class Meta:
@@ -245,7 +197,7 @@ class PostDetailApi(ApiAuthMixin, APIView):
 
         class Meta:
             model = Post
-            exclude = ['id', 'user', 'created_at']
+            exclude = ['id', 'user', 'created_at', 'tv_series', 'movie']
 
     @extend_schema(responses=OutPutPostDetailSerializer, tags=['Post'])
     def get(self, request, post_id):
@@ -294,23 +246,23 @@ class FollowApi(ApiAuthMixin, APIView):
         )(many=True)
 
 
-    class InputPostSerializer(serializers.ModelSerializer):
+    class InputFollowSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = Follow
-            fields = ['follower', 'following']
+            fields = ['following',]
 
 
     @extend_schema(responses=OutPutFollowSerializer, tags=['Follow'])
     def get(self, request):
         query = get_follow_list(user= request.user)
-        return Response(self.OutPutFollowSerializer(query, many=True, context={"request": request}).data)
+        return Response(self.OutPutFollowSerializer(query, context={"request": request}).data)
 
-    @extend_schema(request=InputPostSerializer,
+    @extend_schema(request=InputFollowSerializer,
                    responses=OutPutFollowSerializer,
                    tags=['Follow'])
     def post(self, request):
-        serializer = self.InputPostSerializer(data=request.data)
+        serializer = self.InputFollowSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         query = create_follow(data=serializer.validated_data, user=request.user)
         if not query:
@@ -323,8 +275,8 @@ class followDetailApi(ApiAuthMixin, APIView):
 
     
     @extend_schema(tags=['Follow'])
-    def delete(self, request, follow_id):
-        query = delete_follow(follow_id=follow_id)
+    def delete(self, request, user_id):
+        query = delete_follow(user_id=user_id, user= request.user)
         if not query:
             return Response('object does not exist', status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_204_NO_CONTENT)

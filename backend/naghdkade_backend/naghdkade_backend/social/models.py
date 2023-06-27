@@ -28,8 +28,10 @@ class Post(models.Model):
     @property
     def mean_rating(self) -> float:
         ratings = Rating.objects.filter(post= self)
-        mean = mean([r.value for r in ratings])
-        return float(mean)
+        if ratings:
+            mean_value = mean(data=[r.value for r in ratings])
+            return float(mean_value)
+        return 0
 
 
 class Follow(models.Model):
@@ -61,7 +63,7 @@ class Comment(models.Model):
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    value = models.IntegerField(choices=[(i, i) for i in range(1, 5)])
+    value = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
 
     def __str__(self):
         return f"{self.user.username} rates Post {self.post.id} with {self.value}"

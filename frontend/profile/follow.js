@@ -1,8 +1,0 @@
-function followingOnloadHandler(){
-    
-}
-
-function followerOnloadHandler(){
-
-}
-
